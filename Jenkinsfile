@@ -23,7 +23,7 @@ node('docker && linux-build') {
         environment.inside("--privileged -u 0:0") {
           withEnv([
             "USE_CCACHE=true",
-            "RELEASE_NAME=params.VERSION",
+            "RELEASE_NAME=$params.VERSION",
             "RELEASE=$BUILD_NUMBER"
           ]) {
               stage('Prepare') {
@@ -45,11 +45,11 @@ node('docker && linux-build') {
           }
     
           withEnv([
-            "VERSION=params.VERSION",
-            "CHANGES=params.CHANGES",
-            "GITHUB_PRERELEASE=params.GITHUB_PRERELEASE",
-            "GITHUB_USER=params.GITHUB_USER",
-            "GITHUB_REPO=params.GITHUB_REPO"
+            "VERSION=$params.VERSION",
+            "CHANGES=$params.CHANGES",
+            "GITHUB_PRERELEASE=$params.GITHUB_PRERELEASE",
+            "GITHUB_USER=$params.GITHUB_USER",
+            "GITHUB_REPO=$params.GITHUB_REPO"
           ]) {
             stage('Release') {
               if (params.GITHUB_UPLOAD) { 
