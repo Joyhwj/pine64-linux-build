@@ -39,7 +39,7 @@ node('docker && linux-build') {
                   make -j4 $MAKE_TARGET
                 '''
               }
-          }
+          
     
           withEnv([
             "VERSION=1.0",
