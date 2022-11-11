@@ -21,11 +21,8 @@ node('docker && linux-build') {
         def environment = docker.build('build-environment:build-pine64-image', 'build-environment')
 
         environment.inside("--privileged -u 0:0") {
-          withEnv([
-            "USE_CCACHE=true",
-            "RELEASE_NAME=1.0",
-            "RELEASE=$BUILD_NUMBER"
-          ]) {
+          
+             
               stage('Prepare') {
                 sh '''#!/bin/bash
                   set +xe
