@@ -21,8 +21,14 @@ node('docker && linux-build') {
         def environment = docker.build('build-environment:build-pine64-image', 'build-environment')
 
         environment.inside("--privileged -u 0:0") {
-          
-             {
+         sh '''#!/bin/bash
+             echo mynameis
+           '''
+          withEnv([
+            "USE_CCACHE=true",
+            "RELEASE_NAME=env.VERSION",
+            "RELEASE=$BUILD_NUMBER"
+          ]) {
               stage('Prepare') {
                 sh '''#!/bin/bash
                   set +xe
@@ -39,45 +45,41 @@ node('docker && linux-build') {
                   make -j4 $MAKE_TARGET
                 '''
               }
-          
+          }
     
           withEnv([
-            "VERSION=1.0",
-            "CHANGES=CHANGES",
-            "GITHUB_PRERELEASE=false",
-            "GITHUB_USER=joyhwj",
-            "GITHUB_REPO=build-pine64-image"
+            "VERSION=$VERSION",
+            "CHANGES=$CHANGES",
+            "GITHUB_PRERELEASE=$GITHUB_PRERELEASE",
+            "GITHUB_USER=$GITHUB_USER",
+            "GITHUB_REPO=$GITHUB_REPO"
           ]) {
             stage('Release') {
               if (params.GITHUB_UPLOAD) { 
                 sh '''#!/bin/bash
                   set -xe
                   shopt -s nullglob
-
                   github-release release \
-                      --tag "$VERSION" \
+                      --tag "${VERSION}" \
                       --name "$VERSION: $BUILD_TAG" \
                       --description "${CHANGES}\n\n${BUILD_URL}" \
                       --draft
-
                   for file in *.xz *.deb; do
                     github-release upload \
-                        --tag "$VERSION" \
+                        --tag "${VERSION}" \
                         --name "$(basename "$file")" \
                         --file "$file" &
                   done
-
                   wait
-
                   if [[ "$GITHUB_PRERELEASE" == "true" ]]; then
                     github-release edit \
-                      --tag "$VERSION" \
+                      --tag "${VERSION}" \
                       --name "$VERSION: $BUILD_TAG" \
                       --description "${CHANGES}\n\n${BUILD_URL}" \
                       --pre-release
                   else
                     github-release edit \
-                      --tag "$VERSION" \
+                      --tag "${VERSION}" \
                       --name "$VERSION: $BUILD_TAG" \
                       --description "${CHANGES}\n\n${BUILD_URL}"
                   fi
