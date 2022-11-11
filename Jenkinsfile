@@ -21,8 +21,9 @@ node('docker && linux-build') {
         def environment = docker.build('build-environment:build-pine64-image', 'build-environment')
 
         environment.inside("") {
-         sh "#!/bin/bash
-             echo mynameis"
+         sh '''#!/bin/bash
+             echo mynameis
+           '''
           withEnv([
             "USE_CCACHE=true",
             "RELEASE_NAME=env.VERSION",
