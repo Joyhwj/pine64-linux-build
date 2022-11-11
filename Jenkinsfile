@@ -22,7 +22,7 @@ node('docker && linux-build') {
 
         environment.inside("--privileged -u 0:0") {
           
-             
+             {
               stage('Prepare') {
                 sh '''#!/bin/bash
                   set +xe
