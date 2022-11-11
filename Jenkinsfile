@@ -23,7 +23,7 @@ node('docker && linux-build') {
         environment.inside("--privileged -u 0:0") {
           withEnv([
             "USE_CCACHE=true",
-            "RELEASE_NAME=$VERSION",
+            "RELEASE_NAME=$VERSION123",
             "RELEASE=$BUILD_NUMBER"
           ]) {
               stage('Prepare') {
