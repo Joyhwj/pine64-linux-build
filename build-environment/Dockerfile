@@ -11,7 +11,7 @@ RUN apt-get update -y && \
     sudo cpio nano vim kmod kpartx wget bsdtar qemu-user-static \
     pxz ruby-dev debootstrap multistrap libssl-dev jq
 
-RUN gem install fpm
+RUN gem install fpm -v 1.4.0
 
 RUN curl -L https://github.com/aktau/github-release/releases/download/v0.6.2/linux-amd64-github-release.tar.bz2 | tar -C /tmp -jx && \
     mv /tmp/bin/linux/amd64/github-release /usr/local/bin/
