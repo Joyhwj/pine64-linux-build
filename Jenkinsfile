@@ -58,14 +58,14 @@ node('docker && linux-build') {
                   shopt -s nullglob
 
                   github-release release \
-                      --tag "${VERSION}" \
+                      --tag "$VERSION" \
                       --name "$VERSION: $BUILD_TAG" \
                       --description "${CHANGES}\n\n${BUILD_URL}" \
                       --draft
 
                   for file in *.xz *.deb; do
                     github-release upload \
-                        --tag "${VERSION}" \
+                        --tag "$VERSION" \
                         --name "$(basename "$file")" \
                         --file "$file" &
                   done
@@ -74,13 +74,13 @@ node('docker && linux-build') {
 
                   if [[ "$GITHUB_PRERELEASE" == "true" ]]; then
                     github-release edit \
-                      --tag "${VERSION}" \
+                      --tag "$VERSION" \
                       --name "$VERSION: $BUILD_TAG" \
                       --description "${CHANGES}\n\n${BUILD_URL}" \
                       --pre-release
                   else
                     github-release edit \
-                      --tag "${VERSION}" \
+                      --tag "$VERSION" \
                       --name "$VERSION: $BUILD_TAG" \
                       --description "${CHANGES}\n\n${BUILD_URL}"
                   fi
