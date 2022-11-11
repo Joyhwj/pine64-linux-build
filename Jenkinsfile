@@ -20,7 +20,7 @@ node('docker && linux-build') {
 
         def environment = docker.build('build-environment:build-pine64-image', 'build-environment')
 
-        environment.inside("") {
+        environment.inside("--privileged -u 1000:1000") {
          sh '''#!/bin/bash
              echo mynameis
            '''
