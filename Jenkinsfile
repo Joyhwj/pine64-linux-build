@@ -6,7 +6,7 @@ properties([
     choice(choices: 'all\nkernel-tarball\nlinux-package\nxenial-minimal-pinebook\nxenial-mate-pinebook\nstretch-i3-pinebook\nxenial-pinebook\nlinux-pinebook\nxenial-minimal-pine64\nlinux-pine64\nxenial-minimal-sopine\nlinux-sopine', description: 'What makefile build type to target', name: 'MAKE_TARGET')
     booleanParam(defaultValue: true, description: 'Whether to upload to Github for release or not', name: 'GITHUB_UPLOAD'),
     booleanParam(defaultValue: false, description: 'If build should be marked as pre-release', name: 'GITHUB_PRERELEASE'),
-    string(defaultValue: 'ayufan-pine64', description: 'GitHub username or organization', name: 'GITHUB_USER'),
+    string(defaultValue: 'joyhwj', description: 'GitHub username or organization', name: 'GITHUB_USER'),
     string(defaultValue: 'build-pine64-image', description: 'GitHub repository', name: 'GITHUB_REPO'),
   ])
 ])
@@ -23,7 +23,7 @@ node('docker_linux-build') {
       environment.inside("--privileged -u 0:0") {
         withEnv([
           "USE_CCACHE=true",
-          "RELEASE_NAME=$VERSION",
+          "RELEASE_NAME=env.VERSION",
           "RELEASE=$BUILD_NUMBER"
         ]) {
             stage 'Prepare'
@@ -43,11 +43,11 @@ node('docker_linux-build') {
         }
   
         withEnv([
-          "VERSION=$VERSION",
-          "CHANGES=$CHANGES",
-          "GITHUB_PRERELEASE=$GITHUB_PRERELEASE",
-          "GITHUB_USER=$GITHUB_USER",
-          "GITHUB_REPO=$GITHUB_REPO"
+          "VERSION=env.VERSION",
+          "CHANGES=env.CHANGES",
+          "GITHUB_PRERELEASE=env.GITHUB_PRERELEASE",
+          "GITHUB_USER=env.GITHUB_USER",
+          "GITHUB_REPO=env.GITHUB_REPO"
         ]) {
           stage 'Release'
           if (params.GITHUB_UPLOAD) { 
