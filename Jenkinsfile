@@ -19,8 +19,8 @@ node('docker && linux-build') {
         checkout scm
 
         def environment = docker.build('build-environment:build-pine64-image', 'build-environment')
-
-        environment.inside {
+        docker.image('build-environment:build-pine64-image').withRun {
+        
          sh '''#!/bin/bash
              echo mynameis
            '''
