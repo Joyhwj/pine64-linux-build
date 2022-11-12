@@ -12,7 +12,7 @@ properties([
 ])
 */
 
-node('docker && linux-build') {
+node('docker_linux-build') {
   timestamps {
     wrap([$class: 'AnsiColorBuildWrapper', colorMapName: 'xterm']) {
       stage "Environment"
