@@ -6,7 +6,7 @@ properties([
     choice(choices: 'all\nkernel-tarball\nlinux-package\nxenial-minimal-pinebook\nxenial-mate-pinebook\nstretch-i3-pinebook\nxenial-pinebook\nlinux-pinebook\nxenial-minimal-pine64\nlinux-pine64\nxenial-minimal-sopine\nlinux-sopine', description: 'What makefile build type to target', name: 'MAKE_TARGET')
     booleanParam(defaultValue: true, description: 'Whether to upload to Github for release or not', name: 'GITHUB_UPLOAD'),
     booleanParam(defaultValue: false, description: 'If build should be marked as pre-release', name: 'GITHUB_PRERELEASE'),
-    string(defaultValue: 'joyhwj', description: 'GitHub username or organization', name: 'GITHUB_USER'),
+    string(defaultValue: 'ayufan-pine64', description: 'GitHub username or organization', name: 'GITHUB_USER'),
     string(defaultValue: 'build-pine64-image', description: 'GitHub repository', name: 'GITHUB_REPO'),
   ])
 ])
@@ -19,11 +19,8 @@ node('docker && linux-build') {
         checkout scm
 
         def environment = docker.build('build-environment:build-pine64-image', 'build-environment')
-        docker.image('build-environment:build-pine64-image').withRun {
-        
-         sh '''#!/bin/bash
-             echo mynameis
-           '''
+
+        docker.image('build-environment:build-pine64-image').withRun("--privileged") {
           withEnv([
             "USE_CCACHE=true",
             "RELEASE_NAME=env.VERSION",
