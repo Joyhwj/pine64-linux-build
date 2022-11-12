@@ -20,7 +20,7 @@ node('docker_linux-build') {
 
       def environment = docker.build('build-environment:build-pine64-image', 'build-environment')
 
-      environment.inside("--privileged -u 0:0") {
+      environment.inside("-v /dev:/dev --privileged -u 0:0") {
         withEnv([
           "USE_CCACHE=true",
           "RELEASE_NAME=$VERSION",
@@ -28,7 +28,7 @@ node('docker_linux-build') {
         ]) {
             stage 'Prepare'
             sh '''#!/bin/bash
-              mknod /dev/loop0 b 7 0
+              
               set +xe
               export CCACHE_DIR=$WORKSPACE/ccache
               ccache -M 0 -F 0
