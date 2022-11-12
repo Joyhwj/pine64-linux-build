@@ -20,7 +20,7 @@ node('docker && linux-build') {
 
         def environment = docker.build('build-environment:build-pine64-image', 'build-environment')
 
-        environment.withRun("--privileged -u 0:0") {
+        environment.withRun("--privileged -u 0:0 --entrypoint=/bin/bash") {
           withEnv([
             "USE_CCACHE=true",
             "RELEASE_NAME=env.VERSION",
