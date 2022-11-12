@@ -28,6 +28,7 @@ node('docker && linux-build') {
           ]) {
               stage('Prepare') {
                 sh '''#!/bin/bash
+                  id
                   set +xe
                   export CCACHE_DIR=$WORKSPACE/ccache
                   ccache -M 0 -F 0
