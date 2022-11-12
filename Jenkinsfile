@@ -20,7 +20,7 @@ node('docker && linux-build') {
 
         def environment = docker.build('build-environment:build-pine64-image', 'build-environment')
 
-        environment.inside("--privileged -v /var/run/docker.sock:/var/run/docker.sock") {
+        environment.inside {
          sh '''#!/bin/bash
              echo mynameis
            '''
