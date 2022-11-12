@@ -31,6 +31,8 @@ node('docker_linux-build') {
               set +xe
               export CCACHE_DIR=$WORKSPACE/ccache
               ccache -M 0 -F 0
+              git config --global --add safe.directory '*'
+              echo "test show release_name:${RELEASE_NAME}  release=${RELEASE}"
               git clean -ffdx -e ccache
             '''
 
