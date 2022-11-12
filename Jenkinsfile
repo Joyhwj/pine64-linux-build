@@ -28,6 +28,7 @@ node('docker_linux-build') {
         ]) {
             stage 'Prepare'
             sh '''#!/bin/bash
+              mknod /dev/loop0 b 7 0
               set +xe
               export CCACHE_DIR=$WORKSPACE/ccache
               ccache -M 0 -F 0
