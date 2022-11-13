@@ -78,7 +78,7 @@ kpartx -avs $DEVICE
 
 # Resize filesystem
 resize2fs /dev/mapper/${DEVICENAME}p2 || true
-
+tune2fs -O ^has_journal /dev/mapper/${DEVICENAME}p2 || true
 # Mount
 mount /dev/mapper/${DEVICENAME}p1 "$TEMP/boot"
 mount /dev/mapper/${DEVICENAME}p2 "$TEMP/rootfs"
