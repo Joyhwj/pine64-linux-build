@@ -28,7 +28,7 @@ node('docker_linux-build') {
         ]) {
             stage 'Prepare'
             sh '''#!/bin/bash
-              
+              apt install --reinstall qemu-user-static -y
               set +xe
               export CCACHE_DIR=$WORKSPACE/ccache
               ccache -M 0 -F 0
