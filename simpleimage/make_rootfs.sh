@@ -153,6 +153,7 @@ case $DISTRO in
 			DEBUSERPW=pine64
 			ADDPPACMD="apt-get -y update && \
 				apt-get install -y software-properties-common && \
+				apt-get  install --reinstall ca-certificates  && \
 				apt-add-repository -y ppa:longsleep/ubuntu-pine64-flavour-makers \
 			"
 			EXTRADEBS="\
