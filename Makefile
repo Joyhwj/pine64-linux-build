@@ -38,7 +38,7 @@ kernel/initrd.gz: busybox/busybox
 	cd kernel/ && ./make_initrd.sh
 
 boot-tools/.git:
-	git clone --single-branch --depth=1 --branch=$(BOOT_TOOLS_BRANCH) https://github.com/joyhwj/pine64-boot-tools
+	git clone --single-branch --depth=1 --branch=$(BOOT_TOOLS_BRANCH) https://github.com/joyhwj/pine64-boot-tools boot-tools	
 
 boot-tools: boot-tools/.git
 
