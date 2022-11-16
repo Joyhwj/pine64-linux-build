@@ -85,7 +85,7 @@ case $DISTRO in
 		;;
 	xenial|zesty)
 		#version=$(curl -s https://api.github.com/repos/$RELEASE_REPO/releases/latest | jq -r ".tag_name")
-		version=0.1
+		version=0.4.3
 		ROOTFS="https://github.com/$RELEASE_REPO/releases/download/${version}/ubuntu-${DISTRO}-${VARIANT}-${version}-${BUILD_ARCH}.tar.xz"
 		TAR_OPTIONS="-J --strip-components=1 binary"
 		;;
